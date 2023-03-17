@@ -5,7 +5,8 @@ import fetch  from 'node-fetch';
 import dotenv from 'dotenv';
 import moment from 'moment';
 import 'moment/locale/fr.js';
-import cron from 'node-cron'
+import axios from "axios";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 moment.locale('fr');
 const port=process.env.PORT;

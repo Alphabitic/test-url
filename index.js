@@ -43,8 +43,6 @@ const corsOptions = {
   allowedHeaders: 'Content-Type',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-
-app.use(cors(corsOptions));
 app.use(cors());
 moment.locale('fr');
 const port=process.env.PORT;
@@ -61,17 +59,21 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
     res.send({ message: "Hello World!" });
 });
-app.get('/check-url', async (req, res) => {
-    const url = req.query.url;
-  
+// importations et configuration du serveur express
+
+app.get('/check-urls', async (req, res) => {
+  const results = [];
+  for (const url of urls) {
     try {
-      const response = await fetch(url, { method: 'GET' });
-      const status = response.status;
-      res.json({ url, status });
+      const response = await axios.get(url);
+      results.push({ url, status: response.status });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      results.push({ url, status: error.response ? error.response.status : 500 });
     }
-  });
+  }
+  res.json({ results });
+});
+
   
   app.listen(5000, () => {
     console.log('Serveur démarré sur le port 3000');

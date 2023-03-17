@@ -23,7 +23,7 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.send({ message: "Hello World!" });
 });
-app.get('/api/check-url', async (req, res) => {
+app.get('/check-url', async (req, res) => {
     const url = req.query.url;
   
     try {

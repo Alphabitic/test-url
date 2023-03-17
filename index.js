@@ -20,7 +20,9 @@ app.use(bodyParser.json());
 
 // Configuration de CORS
 app.use(cors());
-
+app.get("/", (req, res) => {
+    res.send({ message: "Hello World!" });
+});
 app.get('/api/check-url', async (req, res) => {
     const url = req.query.url;
   
